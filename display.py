@@ -134,6 +134,7 @@ def display_menu():
             os.system("clear")
             print("Please enter numbers from 1 to 10: ")
 
+    print("XD")
 
 if __name__ == "__main__":
     main()
