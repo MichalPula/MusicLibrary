@@ -104,8 +104,8 @@ def display_menu():
             os.system("clear")
             music_reports.find_longest_album(albums_list)
             music_reports.find_shortest_album(albums_list)
-            music_reports.youngest_album(albums_list)
-            music_reports.oldest_album(albums_list)
+            music_reports.oldest_or_youngest_album(albums_list, "youngest")
+            music_reports.oldest_or_youngest_album(albums_list, "oldest")
 
         elif choice == "8":
             os.system("clear")

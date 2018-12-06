@@ -287,32 +287,25 @@ def find_longest_album(albums_list):
     print(drawing_table(output_data))
 
 
-def youngest_album(albums_list):
+def oldest_or_youngest_album(albums_list, oldest_or_youngest):
     youngest_album = []
-    years_string = []
-    print("")
-    print("")
-    print("Youngest album in library: ")
-    for album in albums_list:
-        years_string.append(album[2])
-        years_integer = [int(element) for element in years_string]
-        index_of_youngest_album = years_integer.index(max(years_integer))
-    youngest_album.append(albums_list[index_of_youngest_album])
-    print(drawing_table(youngest_album))
-
-
-def oldest_album(albums_list):
     oldest_album = []
     years_string = []
     print("")
     print("")
-    print("Oldest album in library: ")
     for album in albums_list:
         years_string.append(album[2])
         years_integer = [int(element) for element in years_string]
+        index_of_youngest_album = years_integer.index(max(years_integer))
         index_of_oldest_album = years_integer.index(min(years_integer))
+    youngest_album.append(albums_list[index_of_youngest_album])
     oldest_album.append(albums_list[index_of_oldest_album])
-    print(drawing_table(oldest_album))
+    if oldest_or_youngest == "youngest":
+        print("Youngest album in library: ")
+        print(drawing_table(youngest_album))
+    else:
+        print("Oldest album in library: ")
+        print(drawing_table(oldest_album))
 
 
 if __name__ == "__main__":
