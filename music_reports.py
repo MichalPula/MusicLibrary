@@ -30,26 +30,32 @@ def drawing_table(input_data):
 
 def find_by_genre(input_data):
     loop = True
-    while loop is True:
+    while loop:
         genre = input("Please enter a genre which you are looking for: ")
         genre = genre.strip()
-        genres_table = []
-        output_data = []
-        for albums in input_data:
-            genres_table.append(albums[3])
-        if genre in genres_table:
-            for album in input_data:
-                if genre in album[3]:
-                    output_data.append(album)
-            return drawing_table(output_data)
+        if genre.isdigit():
+            os.system("clear")
+            print("Please enter genre not a number.")
         else:
-            print("There are no", genre, "albums")
+            os.system("clear")
+            genres_table = []
+            output_data = []
+            for albums in input_data:
+                genres_table.append(albums[3])
+            if genre in genres_table:
+                for album in input_data:
+                    if genre in album[3]:
+                        output_data.append(album)
+                return drawing_table(output_data)
+            else:
+                print("There are no", genre, "albums")
 
 
 def find_by_name(input_data):
     loop = True
-    while loop is True:
+    while loop:
         album_name = input("Please enter name of album which you are looking for: ")
+        os.system("clear")
         names_table = []
         output_data = []
         album_name = album_name.strip()
@@ -61,25 +67,30 @@ def find_by_name(input_data):
                     output_data.append(album)
             return drawing_table(output_data)
         else:
-            print("There are no albums named ", album_name)
+            print("There are no albums named", album_name)
 
 
 def find_by_artist(input_data):
     loop = True
-    while loop is True:
+    while loop:
         artist_name = input("Please enter name of artist to search for his albums: ")
-        artists_table = []
-        output_data = []
         artist_name = artist_name.strip()
-        for albums in input_data:
-            artists_table.append(albums[0])
-        if artist_name in artists_table:
-            for album in input_data:
-                if artist_name in album[0]:
-                    output_data.append(album)
-            return drawing_table(output_data)
+        if artist_name.isdigit():
+            os.system("clear")
+            print("Please enter name of an artist not number.")
         else:
-            print("There are no albums made by ", artist_name)
+            os.system("clear")
+            artists_table = []
+            output_data = []
+            for albums in input_data:
+                artists_table.append(albums[0])
+            if artist_name in artists_table:
+                for album in input_data:
+                    if artist_name in album[0]:
+                        output_data.append(album)
+                return drawing_table(output_data)
+            else:
+                print("There are no albums made by", artist_name)
 
 
 def add_album():
@@ -124,7 +135,7 @@ def add_album():
 
 def delete_album():
     loop = True
-    while loop is True:
+    while loop:
         index_of_line_to_delete = input("Which album do you want to delete? Write it's ID here: ")
         index_of_line_to_delete = index_of_line_to_delete.strip()
         if index_of_line_to_delete.isdigit():
@@ -149,57 +160,76 @@ def delete_album():
 
 def find_albums_made_in_year(albums_list):
     loop = True
-    while loop is True:
+    while loop:
         amount_of_albums = len(albums_list)
         # year_int = int(input("Enter year (yyyy): "))
         year = input("Enter year (yyyy): ")
         year = year.strip()
         if year.isdigit():
-            year_string = str(year)
-            years_table = []
-            output_data = []
-            os.system("clear")
-            for albums in albums_list:
-                years_table.append(albums[2])
-            if year_string in years_table:
-                for album in albums_list:
-                    if year_string in album[2]:
-                        output_data.append(album)
-                return drawing_table(output_data)
+            year_int = int(year)
+            if year_int > 2018:
+                os.system("clear")
+                print("I don't know what albums will be made in future :D")
+                print("Let's stick to the present")
             else:
-                print("There are no albums made in", year)
+                year_string = str(year)
+                years_table = []
+                output_data = []
+                os.system("clear")
+                for albums in albums_list:
+                    years_table.append(albums[2])
+                if year_string in years_table:
+                    for album in albums_list:
+                        if year_string in album[2]:
+                            output_data.append(album)
+                    return drawing_table(output_data)
+                else:
+                    print("There are no albums made in", year)
         else:
-            print("Please enter a number not a string: ")
+            os.system("clear")
+            print("Please enter valid number (not a string or negative number): ")
             continue
 
 
 def find_albums_made_between_years(albums_list):
     loop = True
-    while loop is True:
+    while loop:
         years_range = []
         starting_year = input("Enter starting year: ")
         starting_year = starting_year.strip()
         if starting_year.isdigit():
-            starting_year = int(starting_year)
-            years_range.append(starting_year)
-            ending_year = input("Enter ending year: ")
-            ending_year = ending_year.strip()
-            if ending_year.isdigit():
-                ending_year = int(ending_year)
-                years_range.append(ending_year)
-                output_data = []
+            starting_year_int = int(starting_year)
+            if starting_year_int > 2018:
                 os.system("clear")
-                for album in albums_list:
-                    if int(album[2]) in range(years_range[0], years_range[1]+1):
-                        output_data.append(album)
-                return drawing_table(output_data)
+                print("You can't search for albums in future.")
+                print("Let's stick to the present")
             else:
-                os.system("clear")
-                print("Enter a number not a string!")
-            continue
+                starting_year = int(starting_year)
+                years_range.append(starting_year)
+                ending_year = input("Enter ending year: ")
+                ending_year = ending_year.strip()
+                ending_year_int = int(ending_year)
+                if ending_year_int > 2018:
+                    os.system("clear")
+                    print("You can't search for albums in future.")
+                    print("Let's stick to the present")
+                else:
+                    if ending_year.isdigit():
+                        ending_year = int(ending_year)
+                        years_range.append(ending_year)
+                        output_data = []
+                        os.system("clear")
+                        for album in albums_list:
+                            if int(album[2]) in range(years_range[0], years_range[1]+1):
+                                output_data.append(album)
+                        return drawing_table(output_data)
+                    else:
+                        os.system("clear")
+                        print("Please enter valid number (not a string or negative number): ")
+                    continue
         else:
             os.system("clear")
-            print("Enter a number not a string!")
+            print("Please enter valid number (not a string or negative number): ")
             continue
 
 

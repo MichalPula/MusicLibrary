@@ -6,15 +6,11 @@ import print_ascii_art
 from prettytable import PrettyTable
 
 
-def main():
-    os.system("clear")
-    display_menu()
-
-
 def display_menu():
+    os.system("clear")
     print_ascii_art.print_starting_art()
     loop = True
-    while loop is True:
+    while loop:
         albums_list = []
         albums_list = music_reports.import_library(albums_list)
         choice = input("""
@@ -28,7 +24,6 @@ def display_menu():
 8: Add new album
 9: Delete album
 10: Exit
-
     What you want to do? """)
 
         if choice == "1":
@@ -43,7 +38,7 @@ def display_menu():
 
         elif choice == "3":
             loop2 = True
-            while loop2 is True:
+            while loop2:
                 os.system("clear")
                 search_by_year_option = input("""
 1: Search for albums made in given year
@@ -72,7 +67,7 @@ def display_menu():
         elif choice == "4":
             os.system("clear")
             loop3 = True
-            while loop3 is True:
+            while loop3:
                 search_shortest_longest_album = input("""
 1: Search for longest album
 2: Search for shortest album
@@ -89,6 +84,7 @@ def display_menu():
                     music_reports.find_shortest_album(albums_list)
 
                 else:
+                    os.system("clear")
                     print("Next time please enter '1' or '2'")
                     time.sleep(3)
                     os.system("clear")
@@ -128,13 +124,17 @@ def display_menu():
         elif choice == "10":
             os.system("clear")
             print_ascii_art.print_ending_art()
-            sys.exit("")
+            loop = False
 
         else:
             os.system("clear")
             print("Please enter numbers from 1 to 10: ")
 
-    print("XD")
+
+def main():
+    os.system("clear")
+    display_menu()
+
 
 if __name__ == "__main__":
     main()
