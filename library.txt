@@ -13,3 +13,4 @@ Boston,Boston,1976,hard rock,37:41
 David Bowie,Low,1977,rock,38:26
 6ix9ine,DUMMY BOY,2018,hip hop,69:69
 Kendrick Lamar,To Pimp a Butterfly,2015,hip hop,78:51
+Linkin Park,One More Light,2017,rock pop,35:56

@@ -25,7 +25,7 @@ def drawing_table(input_data):
         table.add_row([ID, input_data[i][0], input_data[i][1], input_data[i][2], input_data[i][3], input_data[i][4]])
         i += 1
         ID += 1
-    return table
+    print(table)
 
 
 def find_by_genre(input_data):
@@ -96,69 +96,122 @@ def find_by_artist(input_data):
 def add_album():
     with open("/home/pulson/Desktop/CODECOOLMUSICLIBRARY/library.txt", 'a') as file:
         new_album = []
+        loop = True
+        while loop:
+            artist_name = input("Artist name: ")
+            artist_name = artist_name.strip()
+            if artist_name.isdigit() or artist_name == "":
+                new_album = []
+                print("Enter valid artist name (not a number)")
 
-        artist_name = input("Artist name: ")
-        artist_name = artist_name.strip()
-        new_album.append(artist_name)
+            else:
+                new_album.append(artist_name)
 
-        album_name = input("Album name: ")
-        album_name = album_name.strip()
-        new_album.append(album_name)
+                album_name = input("Album name: ")
+                album_name = album_name.strip()
+                if album_name == "":
+                    new_album = []
+                    os.system("clear")
+                    print("Enter valid album name")
+                else:
+                    new_album.append(album_name)
+                    release_year = input("Release year: ")
+                    release_year = release_year.strip()
+                    if release_year.isdigit():
+                        release_year_int = int(release_year)
+                        if release_year_int < 2019 and release_year_int > 0:
+                            new_album.append(release_year)
+                            genre = input("Genre: ")
+                            genre = genre.strip()
+                            if genre.isdigit() or genre == "":
+                                new_album = []
+                                os.system("clear")
+                                print("Next time enter valid genre")
+                            else:
+                                new_album.append(genre)
+                                length_minutes = input("Length (mm):  ")
+                                length_minutes = length_minutes.strip()
+                                length_seconds = input("Length (ss):  ")
+                                length_seconds = length_seconds.strip()
 
-        release_year = input("Release year: ")
-        release_year = release_year.strip()
-        new_album.append(release_year)
+                                if not length_minutes or not length_seconds:
+                                    new_album = []
+                                    os.system("clear")
+                                    print("Next time enter valid time (mm) and (ss smaller then 60)")
+                                else:
 
-        genre = input("Genre: ")
-        genre = genre.strip()
-        new_album.append(genre)
+                                    if length_minutes.isdigit() and length_seconds.isdigit():
+                                        length_seconds_int = int(length_seconds)
+                                        if length_seconds_int < 60:
+                                            length = (length_minutes, length_seconds)
+                                            length_seconds_string = str(length[0])
+                                            length_minutes_string = str(length[1])
+                                            length_string = (length_seconds_string + ":" + length_minutes_string)
+                                            new_album.append(length_string)
 
-        length = input("Length (mm:ss):  ")
-        length = length.strip()
-        new_album.append(length)
+                                            file.write("\n")
+                                            i = 4
+                                            for element in new_album:
+                                                file.write(element)
 
-        file.write("\n")
-        i = 4
-        for element in new_album:
-            file.write(element)
+                                                if i > 0:
+                                                    file.write(",")
+                                                    i -= 1
+                                            file.close()
 
-            if i > 0:
-                file.write(",")
-                i -= 1
-        file.close()
+                                            os.system("clear")
+                                            albums_list = []
+                                            albums_list = import_library(albums_list)
+                                            return drawing_table(albums_list)
+                                        else:
+                                            new_album = []
+                                            os.system("clear")
+                                            print("Next time enter valid time (mm) and (ss smaller then 60)")
+                                    else:
+                                        new_album = []
+                                        os.system("clear")
+                                        print("Next time enter valid time (mm) and (ss smaller then 60)")
+                        else:
+                            new_album = []
+                            os.system("clear")
+                            print("Next time enter valid year (2018 or lower)")
+                    elif release_year == "" or isinstance(release_year, str):
+                        new_album = []
+                        os.system("clear")
+                        print("Next time enter valid year (number, 2018 or lower)")
 
-        os.system("clear")
-        albums_list = []
-        albums_list = import_library(albums_list)
-        return drawing_table(albums_list)
 
-
-def delete_album():
+def delete_album(albums_list):
     loop = True
     while loop:
         index_of_line_to_delete = input("Which album do you want to delete? Write it's ID here: ")
         index_of_line_to_delete = index_of_line_to_delete.strip()
         if index_of_line_to_delete.isdigit():
             index_of_line_to_delete = int(index_of_line_to_delete)
-            index_of_line_to_delete -= 1
+            amount_of_albums = len(albums_list)
+            if index_of_line_to_delete > amount_of_albums:
+                print("Enter values from 1 to", amount_of_albums, ".")
+            else:
+                index_of_line_to_delete -= 1
 
-            input_file = open("/home/pulson/Desktop/CODECOOLMUSICLIBRARY/library.txt", "r")
-            data_list = input_file.readlines()
-            input_file.close
+                input_file = open("/home/pulson/Desktop/CODECOOLMUSICLIBRARY/library.txt", "r")
+                data_list = input_file.readlines()
+                input_file.close
 
-            del data_list[index_of_line_to_delete]
-            output_file = open("/home/pulson/Desktop/CODECOOLMUSICLIBRARY/library.txt", "w")
-            output_file.writelines(data_list)
-            output_file.close()
+                del data_list[index_of_line_to_delete]
+                output_file = open("/home/pulson/Desktop/CODECOOLMUSICLIBRARY/library.txt", "w")
+                output_file.writelines(data_list)
+                output_file.close()
 
-            albums_list = []
-            albums_list = import_library(albums_list)
-            return drawing_table(albums_list)
+                albums_list = []
+                albums_list = import_library(albums_list)
+                os.system("clear")
+                return drawing_table(albums_list)
         else:
             print("Please enter an integer value.")
 
 
-def find_albums_made_in_year(albums_list):
+def find_albums_made_in_given_year(albums_list):
     loop = True
     while loop:
         amount_of_albums = len(albums_list)
@@ -257,7 +310,7 @@ def find_shortest_album(albums_list):
             seconds_final = sec_final
         n += 1
     output_data.append(albums_list[ID])
-    print(drawing_table(output_data))
+    return drawing_table(output_data)
 
 
 def find_longest_album(albums_list):
@@ -284,7 +337,40 @@ def find_longest_album(albums_list):
             seconds_final = sec_final
         n += 1
     output_data.append(albums_list[ID])
-    print(drawing_table(output_data))
+    return drawing_table(output_data)
+
+
+def amount_of_albums(albums_list):
+    print("")
+    print("")
+    amount_of_albums = len(albums_list)
+    print("Amount of albums in library:", amount_of_albums)
+
+
+def albums_by_genres(albums_list):
+    print("")
+    print("")
+    genres = []
+    for n in range(len(albums_list)):
+        genres.append(albums_list[n][3])
+        n += 1
+    genres_set = set(genres)
+    genres_count = 0
+    genres_display = {}
+    rock_count = 0
+    hiphop_count = 0
+    for element in genres_set:
+        genres_count = genres.count(element)
+        if "rock" in str(element):
+            rock_count += 1
+            genres_display["rock"] = rock_count
+        elif "hip hop" in str(element):
+            hiphop_count += 1
+            genres_display["hip hop"] = hiphop_count + 1
+        else:
+            genres_display[element] = genres_count
+    for genre, amount_of_albums in genres_display.items():
+        print(genre, "-", amount_of_albums)
 
 
 def oldest_or_youngest_album(albums_list, oldest_or_youngest):
@@ -302,10 +388,10 @@ def oldest_or_youngest_album(albums_list, oldest_or_youngest):
     oldest_album.append(albums_list[index_of_oldest_album])
     if oldest_or_youngest == "youngest":
         print("Youngest album in library: ")
-        print(drawing_table(youngest_album))
+        return drawing_table(youngest_album)
     else:
         print("Oldest album in library: ")
-        print(drawing_table(oldest_album))
+        return drawing_table(oldest_album)
 
 
 if __name__ == "__main__":

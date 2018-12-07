@@ -28,13 +28,11 @@ def display_menu():
 
         if choice == "1":
             os.system("clear")
-            result = music_reports.drawing_table(albums_list)
-            print(result)
+            music_reports.drawing_table(albums_list)
 
         elif choice == "2":
             os.system("clear")
-            found_albums_by_genre = music_reports.find_by_genre(albums_list)
-            print(found_albums_by_genre)
+            music_reports.find_by_genre(albums_list)
 
         elif choice == "3":
             loop2 = True
@@ -43,18 +41,16 @@ def display_menu():
                 search_by_year_option = input("""
 1: Search for albums made in given year
 2: Search for albums made between years (yyyy-yyyy)
-
     What you want to do? """)
 
                 if search_by_year_option == "1":
                     os.system("clear")
-                    result = music_reports.find_albums_made_in_year(albums_list)
-                    print(result)
+                    music_reports.find_albums_made_in_given_year(albums_list)
                     loop2 = False
+
                 elif search_by_year_option == "2":
                     os.system("clear")
-                    result = music_reports.find_albums_made_between_years(albums_list)
-                    print(result)
+                    music_reports.find_albums_made_between_years(albums_list)
                     loop2 = False
 
                 else:
@@ -71,7 +67,6 @@ def display_menu():
                 search_shortest_longest_album = input("""
 1: Search for longest album
 2: Search for shortest album
-
     What you want to do? """)
                 if search_shortest_longest_album == "1":
                     os.system("clear")
@@ -92,13 +87,11 @@ def display_menu():
 
         elif choice == "5":
             os.system("clear")
-            found_albums_by_artist = music_reports.find_by_artist(albums_list)
-            print(found_albums_by_artist)
+            music_reports.find_by_artist(albums_list)
 
         elif choice == "6":
             os.system("clear")
-            found_albums_by_name = music_reports.find_by_name(albums_list)
-            print(found_albums_by_name)
+            music_reports.find_by_name(albums_list)
 
         elif choice == "7":
             os.system("clear")
@@ -106,20 +99,17 @@ def display_menu():
             music_reports.find_shortest_album(albums_list)
             music_reports.oldest_or_youngest_album(albums_list, "youngest")
             music_reports.oldest_or_youngest_album(albums_list, "oldest")
+            music_reports.amount_of_albums(albums_list)
+            music_reports.albums_by_genres(albums_list)
 
         elif choice == "8":
             os.system("clear")
-            added_album_output = music_reports.add_album()
-            print(added_album_output)
+            music_reports.add_album()
 
         elif choice == "9":
             os.system("clear")
-            result = music_reports.drawing_table(albums_list)
-            print(result)
-
-            deleted_album_output = music_reports.delete_album()
-            os.system("clear")
-            print(deleted_album_output)
+            music_reports.drawing_table(albums_list)
+            music_reports.delete_album(albums_list)
 
         elif choice == "10":
             os.system("clear")
